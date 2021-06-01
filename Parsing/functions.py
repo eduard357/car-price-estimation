@@ -46,10 +46,7 @@ def write_csv(file_, data):
     os.makedirs("../Data_sets", exist_ok=True)
     with open('../Data_sets/' + file_, 'a') as f:
         writer = csv.writer(f)
-        writer.writerow((data['name'], data['price'], data['year'], data['mileage'], data['body_type'], data['color'],
-                         data['engine_volume'], data['engine_power'], data['engine_type'], data['tax'],
-                         data['transmission'], data['wheel'], data['state'], data['owners_counter'], data['pts'],
-                         data['custom'], data['ad_url']))
+        writer.writerow(data)
 
 
 # Get data from a page

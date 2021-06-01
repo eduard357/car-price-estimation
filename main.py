@@ -1,11 +1,12 @@
 import os
 import time
-from functions import split_train_test
 import numpy as np
+import pandas as pd
+from functions import split_train_test
 from sklearn import linear_model
 from sklearn.metrics import r2_score
 from sklearn.preprocessing import PolynomialFeatures
-import pandas as pd
+
 
 # Set path to data sets directory
 directory = './Data_sets'
@@ -15,7 +16,7 @@ files = os.listdir(directory)
 for i in range(len(files)):
     files[i] = files[i].split('.csv')[0]
 
-print('\n', 'Список доступных машин для анализа данных:')
+print('\n', 'List of available cars for analyze:')
 files.sort()
 for i in range(1, len(files) + 1):
     print(i, files[i - 1], sep='.')
@@ -28,9 +29,9 @@ testPercent = 0.5  # Part of train data regarding test data
 reg = linear_model.LinearRegression()
 
 # Choose a dataset
-car_index = int(input('Выберите номер машины: '))
+car_index = int(input('Choose the index of the car: '))
 mark_and_model = files[car_index - 1]
-print('Вы выбрали машину:', mark_and_model, '\n')
+print('You\'ve chosen:', mark_and_model, '\n')
 time.sleep(1)
 file_ = mark_and_model + '.csv'
 
@@ -51,7 +52,7 @@ trainData_x, testData_x, trainData_y, testData_y = split_train_test(array_x, arr
 x = np.array(trainData_x, float)
 
 # Polynomial x train
-degree_ = int(input('Укажите степень полинома для аппроксимации: '))
+degree_ = int(input('Choose the polynome degree for approximation: '))
 poly = PolynomialFeatures(degree=degree_)
 transform_x = poly.fit_transform(x)
 
@@ -75,23 +76,23 @@ y_pred = reg.predict(transform_x_test)
 
 # General information about the data set
 print()
-print('Информация по выбранным массивам:')
-print('Количество экземпляров:', len(array_x))
-print('Диапазон для ' + '\'' + 'Год выпуска' + '\':', (round(min(array_x1), 3), round(max(array_x1), 3)))
-print('Диапазон для ' + '\'' + 'Пробег' + '\':', (round(min(array_x2), 3), round(max(array_x2), 3)))
-print('Диапазон для ' + '\'' + 'Стоимость' + '\':', (round(min(array_y), 3), round(max(array_y), 3)))
+print('Information about the chosen car from the data set:')
+print('Amount of instances:', len(array_x))
+print('Range for age:', (round(min(array_x1), 3), round(max(array_x1), 3)))
+print('Range for mileage:', (round(min(array_x2), 3), round(max(array_x2), 3)))
+print('Range for price:', (round(min(array_y), 3), round(max(array_y), 3)))
 
 # Coefficient of determination R2
-print('Коэффициент детерминации =', r2_score(y_test, y_pred))
+print('Coefficient of determination =', r2_score(y_test, y_pred))
 
-print('Где x1 - Год выпуска;', 'x2 - Пробег;', 'y - Стоимость', '\n')
+print('Where x1 - age;', 'x2 - mileage;', 'y - price', '\n')
 
 while True:
     try:
-        a = float(input('Введите x1 для прогноза: '))
-        b = float(input('Введите x2 для прогноза: '))
+        a = float(input('Enter x1 for prediction: '))
+        b = float(input('Enter x2 for prediction: '))
     except:
-        print('Вы не ввели число или сделали это неправильно', 'Работа завершена', sep='\n')
+        print('You haven\'t entered any number or you\'ve done it wrong', 'The processing has finished', sep='\n')
         break
     else:
         xx = np.array([a, b], float)
