@@ -37,11 +37,16 @@ while True:
     else:
         print('Error of page parsing. Apparently, there is a mistake in name of model and/or car brand. Try again')
 
+# Form data set name
 csv_file_name = mark + '_' + model + '.csv'
-if (csv_file_name) in os.listdir('../Data_sets'):
+
+# Delete previously data set with the same name if exists
+if csv_file_name in os.listdir('../Data_sets'):
     os.remove('../Data_sets/' + csv_file_name)
 
+# Write the columns name into the data set
 write_csv(csv_file_name, columns_name)
+
 total_pages = get_total_pages(page_html.text)
 print('Total number of pages =', total_pages)
 
