@@ -2,10 +2,10 @@ import os
 import time
 import numpy as np
 import pandas as pd
-from functions import split_train_test
 from sklearn import linear_model
 from sklearn.metrics import r2_score
 from sklearn.preprocessing import PolynomialFeatures
+from sklearn.model_selection import train_test_split
 
 
 # Set path to data sets directory
@@ -22,10 +22,7 @@ for i in range(1, len(files) + 1):
     print(i, files[i - 1], sep='.')
 print()
 
-# Initial data
-testPercent = 0.5  # Part of train data regarding test data
-
-# LinearRegression - Ordinary least squares Linear Regression class
+# LinearRegression - Ordinary least squares Linear Regression object
 reg = linear_model.LinearRegression()
 
 # Choose a dataset
@@ -39,14 +36,14 @@ file_ = mark_and_model + '.csv'
 df = pd.read_csv(directory + '/' + file_, sep=',')
 df = df.dropna()
 
-# Create independent arrays (age, mileage) and dependent array price
+# Create independent arrays (age, mileage) and label array (price)
 array_x1 = list(df[df.columns[2]])
 array_x2 = list(df[df.columns[3]])
 array_x = [[array_x1[i], array_x2[i]] for i in range(len(array_x1))]
 array_y = list(df[df.columns[1]])
 
 # Separate data in train and test
-trainData_x, testData_x, trainData_y, testData_y = split_train_test(array_x, array_y, testPercent)
+trainData_x, testData_x, trainData_y, testData_y = train_test_split(array_x, array_y, test_size=0.3)
 
 # Training set X
 x = np.array(trainData_x, float)
