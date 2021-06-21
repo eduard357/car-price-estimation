@@ -63,7 +63,6 @@ print('Range for price, rubles:', (round(min(array_y), 3), round(max(array_y), 3
 # Coefficient of determination R2
 print('Coefficient of determination =', r2_score(Ytest, Ypred))
 
-
 # Waiting input data for car price estimation
 while True:
     try:
