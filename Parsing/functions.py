@@ -48,8 +48,8 @@ def write_csv(file_, data):
         writer = csv.writer(f)
         writer.writerow((data['name'], data['price'], data['year'], data['mileage'], data['body_type'], data['color'],
                          data['engine_volume'], data['engine_power'], data['engine_type'], data['tax'],
-                         data['transmission'], data['wheel'], data['state'], data['owners_counter'], data['pts'],
-                         data['custom'], data['ad_url']))
+                         data['transmission'], data['wheel_drive'], data['wheel'], data['state'], data['owners_counter'],
+                         data['pts'], data['custom'], data['ad_url']))
 
 
 # Get data from a page
@@ -137,9 +137,9 @@ def get_page_data(page_html_text, ad_url):
         transmission = ''
 
     try:
-        drive = soup.find('li', class_='CardInfoRow CardInfoRow_drive').find_all('span')[-1].text
+        wheel_drive = soup.find('li', class_='CardInfoRow CardInfoRow_drive').find_all('span')[-1].text
     except:
-        drive = ''
+        wheel_drive = ''
 
     try:
         wheel = soup.find('li', class_='CardInfoRow CardInfoRow_wheel').find_all('span')[-1].text
@@ -180,7 +180,7 @@ def get_page_data(page_html_text, ad_url):
             'engine_type': engine_type,
             'tax': tax,
             'transmission': transmission,
-            'drive': drive,
+            'wheel_drive': wheel_drive,
             'wheel': wheel,
             'state': state,
             'owners_counter': owners_counter,
