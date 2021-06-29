@@ -1,9 +1,9 @@
-import os
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import cross_val_score
 from xgboost import XGBRegressor
 import pandas as pd
 import numpy as np
+import os
 
 # Set path to data sets directory
 directory = './Data_sets'
@@ -39,26 +39,9 @@ df.dropna(axis=0, subset=['Цена, руб.'], inplace=True)
 # Display number of rows in the dataset after removing rows with missing target
 print('Cars number in the dataset after removing ones with missing target: = ', df.shape[0])
 
-# Check whether there are duplicates in the dataset. If true, delete these rows
-if df.shape[0] != df['URL адрес'].nunique():
-    number_of_duplicates = df.shape[0] - df['URL адрес'].nunique()
-    print('Found {} duplicates'.format(number_of_duplicates))
-    URLs_frequency = df.groupby('URL адрес')['URL адрес'].count().sort_values(ascending=False)
-    # Create a dictionary with repeated URLs
-    dict_w_repeated_URLs = {}
-    for index, value in URLs_frequency.items():
-        if value > 1:
-            dict_w_repeated_URLs[index] = value
-    # Get IDs of repeated URls to be deleted from the dataset
-    repeated_IDs_list = []
-    for URL in dict_w_repeated_URLs.keys():
-        repeated_IDs = df[df['URL адрес'] == URL].index[:-1].tolist()
-        repeated_IDs_list.extend(repeated_IDs)
-    df.drop(axis=0, index=repeated_IDs_list, inplace=True)
-    print('All duplicates have been successfully removed')
-    print('Current number of rows in the dataset: {}'.format(df.shape[0]))
-else:
-    print('Found no duplicates')
+# Delete duplicate rows
+df.drop_duplicates(inplace=True)
+print('Current number of rows in the dataset after deleting duplicates: {}'.format(df.shape[0]))
 
 # Target data
 target_column = 'Цена, руб.'
@@ -143,6 +126,3 @@ while True:
             label_test_X[col] = label_encoder.transform(test_X[col])
         # Prediction
         print('price =', str(int(model.predict(label_test_X))) + '₽')
-
-
-
