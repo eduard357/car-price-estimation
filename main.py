@@ -37,7 +37,7 @@ print('#############################################################')
 print('#             General info about the data set                ')
 print('#############################################################')
 
-# Display number of rows in the dataset
+# Display number of rows in the data set
 print('Cars number in the dataset: = ', df.shape[0])
 
 # Remove rows with missing target
