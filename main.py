@@ -4,10 +4,10 @@ import pandas as pd
 from sklearn.model_selection import cross_val_score
 from xgboost import XGBRegressor
 
-# Set path to data sets directory
+# Set path to data sets' directory
 directory = './Data_sets'
 
-# Get data sets name
+# Get data sets' name
 files = os.listdir(directory)
 for i in range(len(files)):
     files[i] = files[i].split('.csv')[0]
@@ -34,7 +34,7 @@ file_path = directory + '/' + file_name
 df = pd.read_csv(file_path, encoding='cp1251')
 
 print('#############################################################')
-print('#             General info about the dataset                 ')
+print('#             General info about the data set                ')
 print('#############################################################')
 
 # Display number of rows in the dataset
