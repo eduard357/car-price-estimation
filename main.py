@@ -23,14 +23,14 @@ for i in range(1, len(files) + 1):
     print(i, files[i - 1], sep='.')
 print()
 
-# Choose a dataset
+# Choose a data set
 car_index = int(input('Choose the index of the car: '))
 mark_and_model = files[car_index - 1]
 print('You\'ve chosen:', mark_and_model, '\n')
 file_name = mark_and_model + '.csv'
 file_path = directory + '/' + file_name
 
-# Read chosen dataset
+# Read chosen data set
 df = pd.read_csv(file_path, encoding='cp1251')
 
 print('#############################################################')
@@ -38,17 +38,17 @@ print('#             General info about the data set                ')
 print('#############################################################')
 
 # Display number of rows in the data set
-print('Cars number in the dataset: = ', df.shape[0])
+print('Cars number in the data set: = ', df.shape[0])
 
 # Remove rows with missing target
 df.dropna(axis=0, subset=['Цена, руб.'], inplace=True)
 
-# Display number of rows in the dataset after removing rows with missing target
-print('Cars number in the dataset after removing ones with missing target: = ', df.shape[0])
+# Display number of rows in the data set after removing rows with missing target
+print('Cars number in the data set after removing ones with missing target: = ', df.shape[0])
 
 # Delete duplicate rows
 df.drop_duplicates(inplace=True)
-print('Current number of rows in the dataset after deleting duplicates: {}'.format(df.shape[0]))
+print('Current number of rows in the data set after deleting duplicates: {}'.format(df.shape[0]))
 
 # Display the range for price
 print('Price ∈ [{:,}₽; {:,}₽]\n'.format(int(df['Цена, руб.'].min()), int(df['Цена, руб.'].max())))
@@ -86,7 +86,7 @@ def label_encode(df):
 # Convert 'object' type to 'category' for train data
 X = obj2categ(X)
 
-# Encode categorical columns of train dataset
+# Encode categorical columns of train data set
 label_X = label_encode(X)
 
 # Define model
