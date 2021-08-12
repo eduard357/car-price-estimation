@@ -132,45 +132,41 @@ print('                                    Prediction part                      
 print('#########################################################################################')
 
 # Waiting input data for prediction
-while True:
-    try:
-        print('Values for year of manufacture ∈ [{}; {}]'.format(data_set['Год выпуска'].min(),
-                                                                 data_set['Год выпуска'].max()))
-        year = int(input('Enter year for prediction: '))
-        print('\nValues for mileage, (km) ∈ [{}; {}]'.format(data_set['Пробег, км.'].min(),
-                                                             data_set['Пробег, км.'].max()))
-        mileage = int(input('Enter mileage for prediction: '))
-        print('\nValues for body type ∈ {}'.format(data_set['Тип кузова'].unique()))
-        body_type = input('Enter body type for prediction: ')
-        print('\nValues for engine volume, (l) ∈ {}'.format(np.sort(data_set['Объем двигателя, л.'].unique())))
-        engine_volume = float(input('Enter engine volume for prediction: '))
-        print('\nValues for engine power, (hp)" ∈ {}'.format(np.sort(data_set['Мощность двигателя, л/с'].unique())))
-        engine_power = int(input('Enter engine power for prediction: '))
-        print('\nValues for engine type ∈ {}'.format(data_set['Тип двигателя'].unique()))
-        engine_type = input('Enter engine type for prediction: ')
-        print('\nValues for transmission type ∈ {}'.format(data_set['Тип коробки передач'].unique()))
-        transmission = input('Enter transmission for prediction: ')
-        print('\nValues for drive type ∈ {}'.format(data_set['Привод'].unique()))
-        drive_type = input('Enter drive type for prediction: ')
-        print('\nValues for state ∈ {}'.format(data_set['Состояние'].unique()))
-        state = input('Enter state for prediction: ')
-        print('\nValues for owners number ∈ {}'.format(np.sort(data_set['Число владельцев'].unique())))
-        owners_number = input('Enter number of owners for prediction: ')
-    except:
-        print('\nYou haven\'t entered any value or you\'ve done it wrong.',
-              'The processing has finished', sep='\n')
-        break
-    else:
-        test_X = pd.DataFrame({'Год выпуска': [year], 'Пробег, км.': [mileage], 'Кузов': [body_type],
-                               'Объем двигателя, л.': [engine_volume], 'Мощность двигателя, л/с': [engine_power],
-                               'Двигатель': [engine_type], 'Коробка передач': [transmission],
-                               'Привод': [drive_type], 'Состояние': [state],
-                               'Число владельцев': [owners_number]})
+try:
+    print('Values for year of manufacture ∈ [{}; {}]'.format(data_set['Год выпуска'].min(),
+                                                             data_set['Год выпуска'].max()))
+    year = int(input('Enter year for prediction: '))
+    print('\nValues for mileage, (km) ∈ [{}; {}]'.format(data_set['Пробег, км.'].min(), data_set['Пробег, км.'].max()))
+    mileage = int(input('Enter mileage for prediction: '))
+    print('\nValues for body type ∈ {}'.format(data_set['Тип кузова'].unique()))
+    body_type = input('Enter body type for prediction: ')
+    print('\nValues for engine volume, (l) ∈ {}'.format(np.sort(data_set['Объем двигателя, л.'].unique())))
+    engine_volume = float(input('Enter engine volume for prediction: '))
+    print('\nValues for engine power, (hp)" ∈ {}'.format(np.sort(data_set['Мощность двигателя, л/с'].unique())))
+    engine_power = int(input('Enter engine power for prediction: '))
+    print('\nValues for engine type ∈ {}'.format(data_set['Тип двигателя'].unique()))
+    engine_type = input('Enter engine type for prediction: ')
+    print('\nValues for transmission type ∈ {}'.format(data_set['Тип коробки передач'].unique()))
+    transmission = input('Enter transmission for prediction: ')
+    print('\nValues for drive type ∈ {}'.format(data_set['Привод'].unique()))
+    drive_type = input('Enter drive type for prediction: ')
+    print('\nValues for state ∈ {}'.format(data_set['Состояние'].unique()))
+    state = input('Enter state for prediction: ')
+    print('\nValues for owners number ∈ {}'.format(np.sort(data_set['Число владельцев'].unique())))
+    owners_number = input('Enter number of owners for prediction: ')
+except:
+    print('\nYou haven\'t entered any value or you\'ve done it wrong.',
+          'The processing has finished', sep='\n')
+else:
+    test_X = pd.DataFrame({'Год выпуска': [year], 'Пробег, км.': [mileage], 'Кузов': [body_type],
+                           'Объем двигателя, л.': [engine_volume], 'Мощность двигателя, л/с': [engine_power],
+                           'Двигатель': [engine_type], 'Коробка передач': [transmission],
+                           'Привод': [drive_type], 'Состояние': [state],
+                           'Число владельцев': [owners_number]})
 
-        # Convert 'object' type to 'category' for test data
-        object_to_category(test_X)
-        # Encode categorical columns of test data
-        test_encoded = label_encode(test_X)
-        # Prediction
-        print('\nprice = {:,}₽'.format(int(model.predict(test_encoded))))
-        break
+    # Convert 'object' type to 'category' for test data
+    object_to_category(test_X)
+    # Encode categorical columns of test data
+    test_encoded = label_encode(test_X)
+    # Prediction
+    print('\nprice = {:,}₽'.format(int(model.predict(test_encoded))))
