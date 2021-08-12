@@ -9,8 +9,22 @@ Project contents:
 
 ## Installation
 
+Following command will clone the repository to your local machine.
+
+```bash
+git clone https://github.com/eduard357/car-price-estimation.git
+```
+
 Use the package manager pip to install all required libraries.
 
 ```bash
 pip install -r requirements.txt
+```
+
+## Usage
+
+To run the prediction model, use following command from work directrory.
+
+```bash
+python ./main.py
 ```
