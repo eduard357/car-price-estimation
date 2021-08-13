@@ -31,7 +31,7 @@ python ./main.py
 
 ## Example
 
-At first one has to choose a data set with an available car from ./Data_sets directory. Some general info is displayed as well. 
+At first one has to choose a data set with an available car from "Data_sets" directory. Some general info is displayed as well. 
 
 ![alt text](https://github.com/eduard357/car-price-estimation/blob/master/Images/general_info.PNG)
 
