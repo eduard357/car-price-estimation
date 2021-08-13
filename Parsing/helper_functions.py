@@ -46,7 +46,7 @@ def get_total_pages(html_text):
 
 
 def get_ads_urls(html_text):
-    """Get URLs of ads on the certain page and their number.
+    """Get URLs of ads on a certain page.
 
     Parameters
     ----------
