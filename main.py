@@ -1,43 +1,9 @@
 import pandas as pd
 import numpy as np
 import os
+from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import cross_val_score
 from xgboost import XGBRegressor
-
-
-def object_to_category(df):
-    """Convert columns of a DataFrame with "object" type to "category" inplace.
-
-    Parameters
-    ----------
-    df : DataFrame
-        DataFrame, whose type of columns should be converted.
-    """
-    for column in df.columns:
-        if df[column].dtype == 'object':
-            df[column] = df[column].astype('category')
-
-
-# Categorical columns encoding
-def label_encode(df):
-    """ Encode categorical columns of a DataFrame with integers.
-
-    Parameters
-    ----------
-    df : DataFrame
-        DataFrame, whose categorical columns should be encoded.
-
-    Returns
-    -------
-    df_label_encoded : DataFrame
-        New DataFrame with encoded categorical columns.
-    """
-    df_label_encoded = df.copy()
-    for column in df_label_encoded.select_dtypes(["category"]):
-        df_label_encoded[column] = df_label_encoded[column].cat.codes
-
-    return df_label_encoded
-
 
 # Set path to directory with data sets
 directory = './Data_sets'
@@ -86,11 +52,11 @@ data_set.drop_duplicates(inplace=True)
 print('Final number of rows in the data set after deleting duplicates:', data_set.shape[0])
 
 # Convert some columns from float to integer
-for col in ['Год выпуска', 'Пробег, км.', 'Мощность двигателя, л/с']:
+for col in ['Цена, руб.', 'Год выпуска', 'Пробег, км.', 'Мощность двигателя, л/с', 'Налог, руб.']:
     data_set[col] = data_set[col].astype('int64')
 
 # Display the range for price
-print('Price ∈ [{:,}₽; {:,}₽]\n'.format(int(data_set['Цена, руб.'].min()), int(data_set['Цена, руб.'].max())))
+print('Price ∈ [{:,}₽; {:,}₽]\n'.format(data_set['Цена, руб.'].min(), data_set['Цена, руб.'].max()))
 
 # Drop uninformative columns
 uninformative_columns = ['Название', 'Цвет', 'Налог, руб.', 'Положение руля', 'ПТС', 'Время владения, г.', 'Таможня',
@@ -104,11 +70,14 @@ y = x.pop('Цена, руб.')
 # Check whether there are any missing values in the predictors
 assert not x.isnull().sum().any(), 'There are some missing values yet. The model cannot be fitted'
 
-# Convert 'object' type to 'category' for predictors
-object_to_category(x)
+# Categorical columns
+object_cols = [col for col in x.columns if x[col].dtypes == 'object']
 
-# Encode categorical columns of train data set
-x_encoded = label_encode(x)
+# Encode categorical columns with integers
+x_encoded = x.copy()
+label_encoder = LabelEncoder()
+for col in object_cols:
+    x_encoded[col] = label_encoder.fit_transform(x[col])
 
 # Define model
 model = XGBRegressor(n_estimators=1000, learning_rate=0.0055, random_state=100)
@@ -122,7 +91,7 @@ print('Cross-validation is being performed')
 scores = -1 * cross_val_score(model, x_encoded, y, cv=5, scoring='neg_mean_absolute_error')
 
 # Model accuracy
-print('Mean Absolute Error = {}₽\n'.format(int(scores.mean())))
+print('Mean Absolute Error = {:,}₽\n'.format(int(scores.mean())))
 
 # Fit model
 model.fit(x_encoded, y)
@@ -158,15 +127,17 @@ except:
     print('\nYou haven\'t entered any value or you\'ve done it wrong.',
           'The processing has finished', sep='\n')
 else:
-    test_X = pd.DataFrame({'Год выпуска': [year], 'Пробег, км.': [mileage], 'Кузов': [body_type],
+    test_X = pd.DataFrame({'Год выпуска': [year], 'Пробег, км.': [mileage], 'Тип кузова': [body_type],
                            'Объем двигателя, л.': [engine_volume], 'Мощность двигателя, л/с': [engine_power],
-                           'Двигатель': [engine_type], 'Коробка передач': [transmission],
+                           'Тип двигателя': [engine_type], 'Тип коробки передач': [transmission],
                            'Привод': [drive_type], 'Состояние': [state],
                            'Число владельцев': [owners_number]})
 
-    # Convert 'object' type to 'category' for test data
-    object_to_category(test_X)
-    # Encode categorical columns of test data
-    test_encoded = label_encode(test_X)
+    # Encode categorical columns with integers for test data
+    test_encoded = test_X.copy()
+    for col in object_cols:
+        label_encoder.fit(x[col])
+        test_encoded[col] = label_encoder.transform(test_X[col])
+
     # Prediction
     print('\nprice = {:,}₽'.format(int(model.predict(test_encoded))))
