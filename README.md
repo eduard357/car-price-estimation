@@ -28,3 +28,17 @@ To run the prediction model, use following command from work directrory.
 ```bash
 python ./main.py
 ```
+
+## Example
+
+At first one has to choose a data set with an available car from ./Data_sets directory. Some general info is displayed as well. 
+
+![alt text](https://github.com/eduard357/car-price-estimation/blob/master/Images/general_info.PNG)
+
+Then the MAE metric is calculated. After that the prediction part takes place where one has to select the features of a car.
+
+![alt text](https://github.com/eduard357/car-price-estimation/blob/master/Images/prediction_part.PNG)
+
+Finally the estimated price is derived.
+
+![alt text](https://github.com/eduard357/car-price-estimation/blob/master/Images/prediction_part2.PNG)
