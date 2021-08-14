@@ -9,7 +9,7 @@ Project contents:
 
 ## Installation
 
-Following command will clone the repository to your local machine.
+The following command will clone the repository to your local machine.
 
 ```bash
 git clone https://github.com/eduard357/car-price-estimation.git
