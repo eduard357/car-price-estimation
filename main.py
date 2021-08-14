@@ -25,7 +25,7 @@ for i, file in enumerate(files):
 # Choose a data set
 car_index = int(input('\nChoose the index of the car: '))
 brand_and_model = files[car_index - 1]
-print('You\'ve chosen:', brand_and_model, '\n')
+print(f'You\'ve chosen: {brand_and_model} \n')
 
 # Create file path
 file_name = brand_and_model + '.csv'
