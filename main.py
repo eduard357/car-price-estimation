@@ -83,7 +83,7 @@ for col in object_cols:
 model = XGBRegressor(n_estimators=1000, learning_rate=0.0055, random_state=100)
 
 print('#########################################################################################')
-print('                                   Model accuracy                                        ')
+print('                                     Model accuracy                                      ')
 print('#########################################################################################')
 
 # Cross-validation
