@@ -27,7 +27,7 @@ car_index = int(input('\nChoose the index of the car: '))
 brand_and_model = files[car_index - 1]
 print(f'You\'ve chosen: {brand_and_model} \n')
 
-# Create file path
+# Create file path to the dataset
 file_name = brand_and_model + '.csv'
 file_path = directory + '/' + file_name
 
