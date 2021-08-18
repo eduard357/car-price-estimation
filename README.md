@@ -37,7 +37,7 @@ At first one has to choose a data set with an available car from "Data_sets" dir
 
 Then the MAE metric is calculated. After that the prediction part takes place where one has to select the features of a car.
 
-![alt text](https://github.com/eduard357/car-price-estimation/blob/master/Images/prediction_part.PNG)
+![alt text](https://github.com/eduard357/car-price-estimation/blob/master/Images/prediction_part1.PNG)
 
 Finally the estimated price is derived.
 
