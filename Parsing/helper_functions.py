@@ -38,7 +38,7 @@ def get_total_pages(html_text):
     """
     soup = BeautifulSoup(html_text, 'lxml')
     upper_class = 'Button Button_color_whiteHoverBlue Button_size_s Button_type_link Button_width_default ' \
-                  'ListingPagination-module__page'
+                  'ListingPagination__page'
     target_class = str(soup.find_all('a', class_=upper_class)[-1].find_all('span', class_='Button__text')[0])
     total_pages = int(target_class.split('>')[1].split('<')[0])
 

@@ -52,7 +52,7 @@ data_set.drop_duplicates(inplace=True)
 print('Final number of rows in the data set after deleting duplicates:', data_set.shape[0])
 
 # Convert some columns from float to integer
-for col in ['Цена, руб.', 'Год выпуска', 'Пробег, км.', 'Мощность двигателя, л/с', 'Налог, руб.']:
+for col in ['Цена, руб.', 'Год выпуска', 'Пробег, км.', 'Мощность двигателя, л/с']:
     data_set[col] = data_set[col].astype('int64')
 
 # Display the range for price
